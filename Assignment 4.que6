@@ -1,0 +1,154 @@
+
+import java.awt.*;
+import java.awt.event.*;
+
+public class StudentRegistration {
+
+    public static void main(String[] args) {
+
+        Frame frame = new Frame("Student Registration Form");
+
+        frame.setLayout(new FlowLayout());
+
+        Label heading = new Label("STUDENT REGISTRATION FORM");
+
+        Label nameLabel = new Label("Name:");
+        TextField nameField = new TextField(20);
+
+        Label fatherLabel = new Label("Father Name:");
+        TextField fatherField = new TextField(20);
+
+        Label ageLabel = new Label("Age:");
+        TextField ageField = new TextField(20);
+
+        Label genderLabel = new Label("Gender:");
+
+        CheckboxGroup genderGroup = new CheckboxGroup();
+
+        Checkbox male = new Checkbox("Male", genderGroup, true);
+        Checkbox female = new Checkbox("Female", genderGroup, false);
+
+        Label courseLabel = new Label("Course:");
+
+        Choice course = new Choice();
+        course.add("Java");
+        course.add("Python");
+        course.add("C++");
+        course.add("Web Development");
+
+        Label hobbyLabel = new Label("Hobbies:");
+
+        Checkbox drawing = new Checkbox("Drawing");
+        Checkbox singing = new Checkbox("Singing");
+        Checkbox music = new Checkbox("Music");
+        Checkbox others = new Checkbox("Others");
+
+        Label addressLabel = new Label("Address:");
+        TextArea address = new TextArea(4, 25);
+
+        Button submit = new Button("Submit");
+        Button clear = new Button("Clear All");
+
+        frame.add(heading);
+
+        frame.add(nameLabel);
+        frame.add(nameField);
+
+        frame.add(fatherLabel);
+        frame.add(fatherField);
+
+        frame.add(ageLabel);
+        frame.add(ageField);
+
+        frame.add(genderLabel);
+        frame.add(male);
+        frame.add(female);
+
+        frame.add(courseLabel);
+        frame.add(course);
+
+        frame.add(hobbyLabel);
+        frame.add(drawing);
+        frame.add(singing);
+        frame.add(music);
+        frame.add(others);
+
+        frame.add(addressLabel);
+        frame.add(address);
+
+        frame.add(submit);
+        frame.add(clear);
+
+        // Submit Button
+        submit.addActionListener(e -> {
+
+            String hobbies = "";
+
+            if (drawing.getState())
+                hobbies += "Drawing ";
+
+            if (singing.getState())
+                hobbies += "Singing ";
+
+            if (music.getState())
+                hobbies += "Music ";
+
+            if (others.getState())
+                hobbies += "Others ";
+
+            String details =
+                    "Name: " + nameField.getText() +
+                    "\nFather Name: " + fatherField.getText() +
+                    "\nAge: " + ageField.getText() +
+                    "\nGender: " + genderGroup.getSelectedCheckbox().getLabel() +
+                    "\nCourse: " + course.getSelectedItem() +
+                    "\nHobbies: " + hobbies +
+                    "\nAddress: " + address.getText();
+
+            Dialog dialog = new Dialog(frame, "Registration Details", true);
+
+            dialog.setLayout(new FlowLayout());
+
+            dialog.add(new Label("Student Registered Successfully!"));
+            dialog.add(new TextArea(details, 8, 35));
+
+            Button ok = new Button("OK");
+
+            ok.addActionListener(a -> dialog.dispose());
+
+            dialog.add(ok);
+
+            dialog.setSize(350, 300);
+            dialog.setVisible(true);
+        });
+
+        // Clear All Button
+        clear.addActionListener(e -> {
+
+            nameField.setText("");
+            fatherField.setText("");
+            ageField.setText("");
+            address.setText("");
+
+            genderGroup.setSelectedCheckbox(male);
+
+            course.select(0);
+
+            drawing.setState(false);
+            singing.setState(false);
+            music.setState(false);
+            others.setState(false);
+        });
+
+        // Window Closing
+        frame.addWindowListener(new WindowAdapter() {
+
+            public void windowClosing(WindowEvent e) {
+                frame.dispose();
+            }
+        });
+
+        frame.setSize(500, 500);
+        frame.setVisible(true);
+    }
+}
